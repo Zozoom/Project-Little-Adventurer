@@ -27,6 +27,12 @@ public class Character : MonoBehaviour
     private UnityEngine.AI.NavMeshAgent _navMeshAgent;
     private Transform TargetPlayer;
 
+    [Header("Health")]
+    private Health _health;
+
+    [Header("Damage Caster")]
+    private DamageCaster _damageCaster;
+
     [Header("State Machine")]
     public CharacterState currentState;
     public enum CharacterState { Normal, Attacking };
@@ -35,6 +41,8 @@ public class Character : MonoBehaviour
     {
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _health = GetComponent<Health>();
+        _damageCaster = GetComponentInChildren<DamageCaster>();
 
         if (!IsPlayer)
         {
@@ -165,11 +173,27 @@ public class Character : MonoBehaviour
 
         currentState = newState;
 
-        Debug.Log("State switched to: " + currentState);
+        // Debug.Log("State switched to: " + currentState);
     }
 
     public void AttackAnimationEnds()
     {
         SwitchStateTo(CharacterState.Normal);
     }
+
+    public void ApplyDamage(int damage, Vector3 attackerPos = new Vector3())
+    {
+        if (_health != null)
+            _health.ApplyDamage(damage);
+    }
+
+    public void EnableDamageCaster()
+    {
+        _damageCaster.EnableDamageCaster();
+    }
+    public void DisableDamageCaster()
+    {
+        _damageCaster.DisableDamageCaster();
+    }
+
 }
