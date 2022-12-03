@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
 
     [Header("State Machine")]
     public CharacterState currentState;
-    public enum CharacterState { Normal, Attacking };
+    public enum CharacterState { Normal, Attacking, Dead, BeingHit };
 
     private void Awake()
     {
@@ -150,6 +150,12 @@ public class Character : MonoBehaviour
             case CharacterState.Normal:
                 break;
             case CharacterState.Attacking:
+                if (_damageCaster != null)
+                    DisableDamageCaster();
+                break;
+            case CharacterState.Dead:
+                break;
+            case CharacterState.BeingHit:
                 break;
         }
 
@@ -164,10 +170,13 @@ public class Character : MonoBehaviour
                     Quaternion newRotation = Quaternion.LookRotation(TargetPlayer.position - transform.position);
                     transform.rotation = newRotation;
                 }
-
                 _animator.SetTrigger("Attack");
                 if (IsPlayer)
                     attackStartTime = Time.time;
+                break;
+            case CharacterState.Dead:
+                break;
+            case CharacterState.BeingHit:
                 break;
         }
 
@@ -185,6 +194,11 @@ public class Character : MonoBehaviour
     {
         if (_health != null)
             _health.ApplyDamage(damage);
+
+        if (!IsPlayer)
+        {
+            GetComponent<EnemyVfxManager>().PlayBeingHitVFX(attackerPos);
+        }
     }
 
     public void EnableDamageCaster()
