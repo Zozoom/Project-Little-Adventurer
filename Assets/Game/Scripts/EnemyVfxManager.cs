@@ -8,6 +8,7 @@ public class EnemyVfxManager : MonoBehaviour
     [Header("Enemy VFX")]
     public VisualEffect footStep;
     public VisualEffect attackVFX;
+    public VisualEffect beingHitSplashVFX;
     public ParticleSystem beingHit;
     public void BurstFootStep()
     {
@@ -26,5 +27,15 @@ public class EnemyVfxManager : MonoBehaviour
         forceForward.y = 0;
         beingHit.transform.rotation = Quaternion.LookRotation(forceForward);
         beingHit.Play();
+
+        // ====================================================================== //
+        // TODO: Potential Memory Leak - Because Init and Destroying a lot VFX.
+        // Use Object Pool, or DOTS(ECS, Job System, Burst Complier)
+        Vector3 splashPos = transform.position;
+        splashPos.y = 2f;
+        VisualEffect newSplashVFX = Instantiate(beingHitSplashVFX, splashPos, Quaternion.identity);
+        newSplashVFX.SendEvent("OnPlay");
+        Destroy(newSplashVFX.gameObject, 10f);
+        // ====================================================================== //
     }
 }

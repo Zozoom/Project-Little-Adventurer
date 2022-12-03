@@ -966,7 +966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131635304}
   m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 16.000002, y: 22.627417, z: -26.000002}
+  m_LocalPosition: {x: 16.000002, y: 22.627419, z: -24.370003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1754,7 +1754,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129105632}
   m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 16.000002, y: 22.627417, z: -26.000002}
+  m_LocalPosition: {x: 16.000002, y: 22.627419, z: -24.370003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1824,7 +1824,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149882123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -8.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   charName: Enemy_01
   _playerNameText3D: {fileID: 0}
   mainCamera: {fileID: 0}
-  MoveSpeed: 0
+  MoveSpeed: 2
   gravity: -9.8
   attackSlideDuration: 0.4
   attackSlideSpeed: 0.06
@@ -2562,6 +2562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footStep: {fileID: 1290348754}
   attackVFX: {fileID: 1964540511}
+  beingHitSplashVFX: {fileID: 5091917010390914819, guid: d1fe802ee7b6fc24497016910b9375d6, type: 3}
   beingHit: {fileID: 1365075319}
 --- !u!114 &1354921660
 MonoBehaviour:

@@ -17,11 +17,20 @@ public class Health : MonoBehaviour
 
     public void ApplyDamage(int damage)
     {
-        if (damage > currentHealth && (currentHealth <= 0))
-            Debug.Log(_cc.charName + " is Dead!");
+        if (currentHealth <= damage)
+            currentHealth -= currentHealth;
         else
             currentHealth -= damage;
 
-        Debug.Log(_cc.charName + ": D[" + damage + "] / H[" + currentHealth + "]");
+        CheckHealth();
+    }
+
+    private void CheckHealth()
+    {
+        Debug.Log(_cc.charName + ": H[" + currentHealth + " / " + maxHealth + "]");
+        if (currentHealth <= 0)
+        {
+            _cc.SwitchStateTo(Character.CharacterState.Dead);
+        }
     }
 }
