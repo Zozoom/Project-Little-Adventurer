@@ -6,7 +6,6 @@ using UnityEngine.VFX;
 public class PlayerVfxManager : MonoBehaviour
 {
     public VisualEffect footStep;
-
     public void Update_FootStep(bool state)
     {
         if (state)
