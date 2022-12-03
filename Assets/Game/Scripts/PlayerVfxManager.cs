@@ -6,11 +6,17 @@ using UnityEngine.VFX;
 public class PlayerVfxManager : MonoBehaviour
 {
     public VisualEffect footStep;
+    public ParticleSystem balde01;
     public void Update_FootStep(bool state)
     {
         if (state)
             footStep.Play();
         else
             footStep.Stop();
+    }
+
+    public void PlayBlade01()
+    {
+        balde01.Play();
     }
 }
