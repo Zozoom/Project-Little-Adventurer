@@ -41,6 +41,9 @@ public class Character : MonoBehaviour
     private MaterialPropertyBlock _materialPropertyBlock;
     private SkinnedMeshRenderer _skinnedMeshRenderer;
 
+    [Header("Item To Drop")]
+    public GameObject itemToDrop;
+
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
@@ -257,6 +260,16 @@ public class Character : MonoBehaviour
             _materialPropertyBlock.SetFloat("_dissolve_height", dissolveHight);
             _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
             yield return null;
+        }
+
+        DropItem();
+    }
+
+    public void DropItem()
+    {
+        if (itemToDrop != null)
+        {
+            Instantiate(itemToDrop, transform.position, Quaternion.identity);
         }
     }
 
