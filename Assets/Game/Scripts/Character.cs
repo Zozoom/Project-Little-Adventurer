@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     private float attackStartTime;
     public float attackSlideDuration = 0.4f;
     public float attackSlideSpeed = 0.06f;
+    private Vector3 impactOnCharacter;
 
     [Header("Enemy Settings")]
     public bool IsPlayer = true;
@@ -137,6 +138,11 @@ public class Character : MonoBehaviour
                 return;
 
             case CharacterState.BeingHit:
+                if (impactOnCharacter.magnitude > 0.2f)
+                {
+                    _movementVelocity = impactOnCharacter * Time.deltaTime;
+                }
+                impactOnCharacter = Vector3.Lerp(impactOnCharacter, Vector3.zero, Time.deltaTime * 5);
                 break;
         }
 
@@ -230,9 +236,18 @@ public class Character : MonoBehaviour
         else
         {
             SwitchStateTo(CharacterState.BeingHit);
+            AddImpact(attackerPos, 10f);
         }
 
         StartCoroutine(MaterialBlink());
+    }
+
+    private void AddImpact(Vector3 attackerPos, float force)
+    {
+        Vector3 impactDir = transform.position - attackerPos;
+        impactDir.Normalize();
+        impactDir.y = 0;
+        impactOnCharacter = impactDir * force;
     }
 
     public void EnableDamageCaster()
