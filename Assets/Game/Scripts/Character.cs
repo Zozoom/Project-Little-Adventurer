@@ -135,6 +135,9 @@ public class Character : MonoBehaviour
 
             case CharacterState.Dead:
                 return;
+
+            case CharacterState.BeingHit:
+                break;
         }
 
         if (IsPlayer)
@@ -147,6 +150,7 @@ public class Character : MonoBehaviour
             _movementVelocity += _verticalVelocity * Vector3.up * Time.deltaTime;
 
             _cc.Move(_movementVelocity);
+            _movementVelocity = Vector3.zero;
         }
 
 
@@ -194,6 +198,7 @@ public class Character : MonoBehaviour
                 StartCoroutine(MaterialDissolve());
                 break;
             case CharacterState.BeingHit:
+                _animator.SetTrigger("BeingHit");
                 break;
         }
 
@@ -207,6 +212,11 @@ public class Character : MonoBehaviour
         SwitchStateTo(CharacterState.Normal);
     }
 
+    public void BeingHitAnimationEnds()
+    {
+        SwitchStateTo(CharacterState.Normal);
+    }
+
     public void ApplyDamage(int damage, Vector3 attackerPos = new Vector3())
     {
         Debug.Log("Apply Damage");
@@ -216,6 +226,10 @@ public class Character : MonoBehaviour
         if (!IsPlayer)
         {
             GetComponent<EnemyVfxManager>().PlayBeingHitVFX(attackerPos);
+        }
+        else
+        {
+            SwitchStateTo(CharacterState.BeingHit);
         }
 
         StartCoroutine(MaterialBlink());
