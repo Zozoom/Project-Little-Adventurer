@@ -1870,10 +1870,13 @@ MonoBehaviour:
   charName: Andie
   _playerNameText3D: {fileID: 1216923824}
   mainCamera: {fileID: 1129105635}
+  playerCoins: 0
   MoveSpeed: 5
   gravity: -20
   attackSlideDuration: 0.4
   attackSlideSpeed: 0.06
+  isInvincible: 0
+  invincibleDuration: 2
   IsPlayer: 1
   currentState: 0
   itemToDrop: {fileID: 0}
@@ -1926,6 +1929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footStep: {fileID: 1679970949}
   slash: {fileID: 1361790843}
+  heal: {fileID: 1177824258}
   balde01: {fileID: 1257808809}
 --- !u!114 &1149882130
 MonoBehaviour:
@@ -2001,6 +2005,81 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1001 &1177824256
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1584956082}
+    m_Modifications:
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503342, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_Name
+      value: VFX Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503347, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_InitialEventName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050473045160503347, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+--- !u!4 &1177824257 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6050473045160503341, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+  m_PrefabInstance: {fileID: 1177824256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!2083052967 &1177824258 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 6050473045160503347, guid: 59e037f841b401b41beacdaa9802504d, type: 3}
+  m_PrefabInstance: {fileID: 1177824256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1194543439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2540,10 +2619,13 @@ MonoBehaviour:
   charName: Enemy_01
   _playerNameText3D: {fileID: 0}
   mainCamera: {fileID: 0}
+  playerCoins: 0
   MoveSpeed: 2
   gravity: -9.8
   attackSlideDuration: 0.4
   attackSlideSpeed: 0.06
+  isInvincible: 0
+  invincibleDuration: 2
   IsPlayer: 0
   currentState: 0
   itemToDrop: {fileID: 448546059838886448, guid: aa5d68e6f06d4df4784607e5b1bfde9f, type: 3}
@@ -2941,6 +3023,7 @@ Transform:
   - {fileID: 1679970950}
   - {fileID: 1257808811}
   - {fileID: 1361790841}
+  - {fileID: 1177824257}
   m_Father: {fileID: 770218240}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

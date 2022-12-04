@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     public string charName = "Jhonny";
     public GameObject _playerNameText3D;
     public Camera mainCamera;
+    public int playerCoins;
 
     [Header("Character Settings")]
     public float MoveSpeed = 5f;
@@ -22,6 +23,9 @@ public class Character : MonoBehaviour
     public float attackSlideDuration = 0.4f;
     public float attackSlideSpeed = 0.06f;
     private Vector3 impactOnCharacter;
+
+    public bool isInvincible;
+    public float invincibleDuration = 2f;
 
     [Header("Enemy Settings")]
     public bool IsPlayer = true;
@@ -205,6 +209,11 @@ public class Character : MonoBehaviour
                 break;
             case CharacterState.BeingHit:
                 _animator.SetTrigger("BeingHit");
+                if (IsPlayer)
+                {
+                    isInvincible = true;
+                    StartCoroutine(DealyCancelInvincible());
+                }
                 break;
         }
 
@@ -225,7 +234,9 @@ public class Character : MonoBehaviour
 
     public void ApplyDamage(int damage, Vector3 attackerPos = new Vector3())
     {
-        Debug.Log("Apply Damage");
+        if (isInvincible)
+            return;
+
         if (_health != null)
             _health.ApplyDamage(damage);
 
@@ -240,6 +251,12 @@ public class Character : MonoBehaviour
         }
 
         StartCoroutine(MaterialBlink());
+    }
+
+    IEnumerator DealyCancelInvincible()
+    {
+        yield return new WaitForSeconds(2f);
+        isInvincible = false;
     }
 
     private void AddImpact(Vector3 attackerPos, float force)
@@ -301,6 +318,29 @@ public class Character : MonoBehaviour
         {
             Instantiate(itemToDrop, transform.position, Quaternion.identity);
         }
+    }
+
+    public void PickUpItem(PickUp item)
+    {
+        switch (item.type)
+        {
+            case PickUp.PickUpType.Heal:
+                AddHealth(item.value);
+                break;
+            case PickUp.PickUpType.Coin:
+                AddCoin(item.value);
+                break;
+        }
+    }
+
+    public void AddHealth(int health)
+    {
+        _health.AddHealth(health);
+        GetComponent<PlayerVfxManager>().PlayHealVFX();
+    }
+    public void AddCoin(int coin)
+    {
+        playerCoins += coin;
     }
 
 }

@@ -8,7 +8,13 @@ public class PlayerVfxManager : MonoBehaviour
     [Header("Player VFX")]
     public VisualEffect footStep;
     public VisualEffect slash;
+    public VisualEffect heal;
     public ParticleSystem balde01;
+
+    public void PlayHealVFX()
+    {
+        heal.Play();
+    }
 
     public void Update_FootStep(bool state)
     {
