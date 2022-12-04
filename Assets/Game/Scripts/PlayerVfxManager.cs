@@ -10,6 +10,8 @@ public class PlayerVfxManager : MonoBehaviour
     public VisualEffect slash;
     public VisualEffect heal;
     public ParticleSystem balde01;
+    public ParticleSystem balde02;
+    public ParticleSystem balde03;
 
     public void PlayHealVFX()
     {
@@ -27,6 +29,24 @@ public class PlayerVfxManager : MonoBehaviour
     public void PlayBlade01()
     {
         balde01.Play();
+    }
+    public void PlayBlade02()
+    {
+        balde02.Play();
+    }
+    public void PlayBlade03()
+    {
+        balde03.Play();
+    }
+
+    public void StopBlade()
+    {
+        balde01.Simulate(0);
+        balde01.Stop();
+        balde02.Simulate(0);
+        balde02.Stop();
+        balde03.Simulate(0);
+        balde03.Stop();
     }
 
     public void PlaySlash(Vector3 pos)
