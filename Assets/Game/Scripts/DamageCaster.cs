@@ -25,7 +25,11 @@ public class DamageCaster : MonoBehaviour
 
             if (targetCC != null)
             {
+
                 PlayerVfxManager playerVfxManager = transform.parent.GetComponent<PlayerVfxManager>();
+                EnemyVfxManager enemyVfxManager = transform.parent.GetComponent<EnemyVfxManager>();
+
+                //Player hiting Enemy with Splash VFX
                 if (playerVfxManager != null)
                 {
                     RaycastHit hit;
@@ -37,6 +41,22 @@ public class DamageCaster : MonoBehaviour
                     if (istHit)
                     {
                         playerVfxManager.PlaySlash(hit.point + new Vector3(0f, 0.5f, 0f));
+                        targetCC.ApplyDamage(damage, transform.parent.position);
+                    }
+                }
+
+                //Enemy hiting Player
+                else if (enemyVfxManager != null)
+                {
+                    RaycastHit hit;
+
+                    Vector3 originalPos = transform.position + (-_damageCasterCollider.bounds.extents.z) * transform.forward;
+
+                    bool istHit = Physics.BoxCast(originalPos, _damageCasterCollider.bounds.extents / 2, transform.forward, out hit, transform.rotation, _damageCasterCollider.bounds.extents.z, 1 << 7);
+
+                    if (istHit)
+                    {
+                        enemyVfxManager.PlaySlash(hit.point + new Vector3(0f, 0.5f, 0f));
                         targetCC.ApplyDamage(damage, transform.parent.position);
                     }
                 }

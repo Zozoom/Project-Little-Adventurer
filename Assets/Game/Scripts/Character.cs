@@ -209,6 +209,7 @@ public class Character : MonoBehaviour
 
     public void ApplyDamage(int damage, Vector3 attackerPos = new Vector3())
     {
+        Debug.Log("Apply Damage");
         if (_health != null)
             _health.ApplyDamage(damage);
 

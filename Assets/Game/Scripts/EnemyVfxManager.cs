@@ -10,6 +10,7 @@ public class EnemyVfxManager : MonoBehaviour
     public VisualEffect attackVFX;
     public VisualEffect beingHitSplashVFX;
     public ParticleSystem beingHit;
+    public VisualEffect slash;
     public void BurstFootStep()
     {
         footStep.SendEvent("OnPlay");
@@ -18,6 +19,12 @@ public class EnemyVfxManager : MonoBehaviour
     public void PlayAttackVFX()
     {
         attackVFX.SendEvent("OnPlay");
+    }
+
+    public void PlaySlash(Vector3 pos)
+    {
+        slash.transform.position = pos;
+        slash.Play();
     }
 
     public void PlayBeingHitVFX(Vector3 attackerPos)
