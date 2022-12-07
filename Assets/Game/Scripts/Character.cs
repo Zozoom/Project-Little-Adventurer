@@ -41,7 +41,11 @@ public class Character : MonoBehaviour
 
     [Header("State Machine")]
     public CharacterState currentState;
-    public enum CharacterState { Normal, Attacking, Dead, BeingHit, Slide };
+    public enum CharacterState { Normal, Attacking, Dead, BeingHit, Slide, Spawn };
+
+    [Header("Spawn Settings")]
+    public float spawnDuration = 2f;
+    private float currentSpawnTime;
 
     [Header("Material Animation")]
     private MaterialPropertyBlock _materialPropertyBlock;
@@ -66,6 +70,7 @@ public class Character : MonoBehaviour
             _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             TargetPlayer = GameObject.FindWithTag("Player").transform;
             _navMeshAgent.speed = MoveSpeed;
+            SwitchStateTo(CharacterState.Spawn);
         }
         else
         {
@@ -170,6 +175,14 @@ public class Character : MonoBehaviour
             case CharacterState.Slide:
                 _movementVelocity = transform.forward * slideSpeed * Time.deltaTime;
                 break;
+
+            case CharacterState.Spawn:
+                currentSpawnTime -= Time.deltaTime;
+                if (currentSpawnTime <= 0)
+                {
+                    SwitchStateTo(CharacterState.Normal);
+                }
+                break;
         }
 
         if (IsPlayer)
@@ -211,6 +224,9 @@ public class Character : MonoBehaviour
                 break;
             case CharacterState.Slide:
                 break;
+            case CharacterState.Spawn:
+                isInvincible = false;
+                break;
         }
 
         //Enter State
@@ -244,6 +260,10 @@ public class Character : MonoBehaviour
                 break;
             case CharacterState.Slide:
                 _animator.SetTrigger("Slide");
+                break;
+            case CharacterState.Spawn:
+                isInvincible = true;
+                currentSpawnTime = spawnDuration;
                 break;
         }
 
