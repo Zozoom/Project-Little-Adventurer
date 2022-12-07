@@ -376,4 +376,11 @@ public class Character : MonoBehaviour
         playerCoins += coin;
     }
 
+    public void RotateToTarget()
+    {
+        if (currentState != CharacterState.Dead)
+        {
+            transform.LookAt(TargetPlayer, Vector3.up);
+        }
+    }
 }
