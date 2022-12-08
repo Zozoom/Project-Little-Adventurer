@@ -264,6 +264,7 @@ public class Character : MonoBehaviour
             case CharacterState.Spawn:
                 isInvincible = true;
                 currentSpawnTime = spawnDuration;
+                StartCoroutine(MaterialAppear());
                 break;
         }
 
@@ -340,31 +341,6 @@ public class Character : MonoBehaviour
         _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
     }
 
-    IEnumerator MaterialDissolve()
-    {
-        yield return new WaitForSeconds(2f);
-
-        float dissolveTimeDuration = 2f;
-        float currentDissolveTime = 0;
-        float dissolveHight_start = 20f;
-        float dissolveHight_target = -10f;
-        float dissolveHight;
-
-        _materialPropertyBlock.SetFloat("_enabledDissolve", 1f);
-        _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
-
-        while (currentDissolveTime < dissolveTimeDuration)
-        {
-            currentDissolveTime += Time.deltaTime;
-            dissolveHight = Mathf.Lerp(dissolveHight_start, dissolveHight_target, currentDissolveTime / dissolveTimeDuration);
-            _materialPropertyBlock.SetFloat("_dissolve_height", dissolveHight);
-            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
-            yield return null;
-        }
-
-        DropItem();
-    }
-
     public void DropItem()
     {
         if (itemToDrop != null)
@@ -402,5 +378,52 @@ public class Character : MonoBehaviour
         {
             transform.LookAt(TargetPlayer, Vector3.up);
         }
+    }
+    IEnumerator MaterialDissolve()
+    {
+        yield return new WaitForSeconds(2f);
+
+        float dissolveTimeDuration = 2f;
+        float currentDissolveTime = 0;
+        float dissolveHight_start = 20f;
+        float dissolveHight_target = -10f;
+        float dissolveHight;
+
+        _materialPropertyBlock.SetFloat("_enableDissolve", 1f);
+        _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+        
+        while (currentDissolveTime < dissolveTimeDuration)
+        {
+            currentDissolveTime += Time.deltaTime;
+            dissolveHight = Mathf.Lerp(dissolveHight_start, dissolveHight_target, currentDissolveTime / dissolveTimeDuration);
+            _materialPropertyBlock.SetFloat("_dissolve_height", dissolveHight);
+            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+            yield return null;
+        }
+
+        DropItem();
+    }
+    IEnumerator MaterialAppear()
+    {
+        float dissolveTimeDuration = spawnDuration;
+        float currentDissolveTime = 0;
+        float dissolveHeight_start = -10f;
+        float dissolveHeight_target = 20f;
+        float dissolveHeight;
+
+        _materialPropertyBlock.SetFloat("_enableDissolve", 1f);
+        _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+
+        while (currentDissolveTime < dissolveTimeDuration)
+        {
+            currentDissolveTime += Time.deltaTime;
+            dissolveHeight = Mathf.Lerp(dissolveHeight_start, dissolveHeight_target, currentDissolveTime / dissolveTimeDuration);
+            _materialPropertyBlock.SetFloat("_dissolve_height", dissolveHeight);
+            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+            yield return null;
+        }
+
+        _materialPropertyBlock.SetFloat("_enableDissolve", 0f);
+        _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
     }
 }
