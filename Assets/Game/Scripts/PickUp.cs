@@ -8,12 +8,17 @@ public class PickUp : MonoBehaviour
     public int value = 20;
     public enum PickUpType { Heal, Coin }
     public PickUpType type;
+    public ParticleSystem collectedVFX;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<Character>().PickUpItem(this);
+
+            if (collectedVFX != null)
+                Instantiate(collectedVFX, transform.position, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }
