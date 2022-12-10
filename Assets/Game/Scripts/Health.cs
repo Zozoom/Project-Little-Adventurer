@@ -5,10 +5,16 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [Header("Character Health")]
+    private Character _cc;
     public int maxHealth;
     public int currentHealth;
-    private Character _cc;
-
+    public float currentHealthPercentage
+    {
+        get
+        {
+            return (float)currentHealth / maxHealth;
+        }
+    }
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -27,7 +33,7 @@ public class Health : MonoBehaviour
 
     private void CheckHealth()
     {
-        Debug.Log(_cc.charName + ": H[" + currentHealth + " / " + maxHealth + "]");
+        // Debug.Log(_cc.charName + ": H[" + currentHealth + " / " + maxHealth + "]");
         if (currentHealth <= 0)
         {
             _cc.SwitchStateTo(Character.CharacterState.Dead);

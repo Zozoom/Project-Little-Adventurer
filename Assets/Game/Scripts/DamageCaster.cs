@@ -92,7 +92,6 @@ public class DamageCaster : MonoBehaviour
 
         if (istHit)
         {
-            Debug.Log("Gizmoo...");
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(hit.point, 0.3f);
         }

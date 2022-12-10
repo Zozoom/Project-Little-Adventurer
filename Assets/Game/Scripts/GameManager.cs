@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private Character playerCharacter;
+    public GameUI_Manager gameUI_Manager;
+    public Character playerCharacter;
     private bool gameIsOver;
 
     private void Awake()
@@ -27,10 +29,23 @@ public class GameManager : MonoBehaviour
         if (gameIsOver)
             return;
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            gameUI_Manager.TogglePauseUI();
+
         if (playerCharacter.currentState == Character.CharacterState.Dead)
         {
             gameIsOver = true;
             GameOver();
         }
+    }
+
+    public void ReturnToTheMainMenu()
+    {
+
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

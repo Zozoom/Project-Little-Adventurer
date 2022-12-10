@@ -61,7 +61,6 @@ namespace UnityLibrary
         // object state has changed in culling group
         void StateChanged(CullingGroupEvent e)
         {
-            Debug.Log("Called");
             if (colorInvisibleObjects == true && e.isVisible == false)
             {
                 objects[e.index].material.color = Color.gray;
