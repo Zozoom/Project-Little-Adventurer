@@ -134,7 +134,6 @@ public class Character : MonoBehaviour
                 else
                     CalcEnemyMovement();
                 break;
-
             case CharacterState.Attacking:
                 if (IsPlayer)
                 {
@@ -160,22 +159,13 @@ public class Character : MonoBehaviour
                     }
                 }
                 break;
-
             case CharacterState.Dead:
                 return;
-
             case CharacterState.BeingHit:
-                if (impactOnCharacter.magnitude > 0.2f)
-                {
-                    _movementVelocity = impactOnCharacter * Time.deltaTime;
-                }
-                impactOnCharacter = Vector3.Lerp(impactOnCharacter, Vector3.zero, Time.deltaTime * 5);
                 break;
-
             case CharacterState.Slide:
                 _movementVelocity = transform.forward * slideSpeed * Time.deltaTime;
                 break;
-
             case CharacterState.Spawn:
                 currentSpawnTime -= Time.deltaTime;
                 if (currentSpawnTime <= 0)
@@ -184,6 +174,12 @@ public class Character : MonoBehaviour
                 }
                 break;
         }
+
+        if (impactOnCharacter.magnitude > 0.2f)
+        {
+            _movementVelocity = impactOnCharacter * Time.deltaTime;
+        }
+        impactOnCharacter = Vector3.Lerp(impactOnCharacter, Vector3.zero, Time.deltaTime * 5);
 
         if (IsPlayer)
         {
@@ -197,8 +193,14 @@ public class Character : MonoBehaviour
             _cc.Move(_movementVelocity);
             _movementVelocity = Vector3.zero;
         }
-
-
+        else
+        {
+            if (currentState != CharacterState.Normal)
+            {
+                _cc.Move(_movementVelocity);
+                _movementVelocity = Vector3.zero;
+            }
+        }
     }
 
     public void SwitchStateTo(CharacterState newState)
@@ -297,6 +299,7 @@ public class Character : MonoBehaviour
         if (!IsPlayer)
         {
             GetComponent<EnemyVfxManager>().PlayBeingHitVFX(attackerPos);
+            AddImpact(attackerPos, 2.5f);
         }
         else
         {
@@ -391,7 +394,7 @@ public class Character : MonoBehaviour
 
         _materialPropertyBlock.SetFloat("_enableDissolve", 1f);
         _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
-        
+
         while (currentDissolveTime < dissolveTimeDuration)
         {
             currentDissolveTime += Time.deltaTime;

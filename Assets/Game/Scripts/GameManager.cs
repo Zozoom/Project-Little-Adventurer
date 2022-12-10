@@ -16,12 +16,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("GAME OVER!");
+        gameUI_Manager.ShowGameOverUI();
     }
 
     public void GameFinished()
     {
-        Debug.Log("GAME IS FINISHED! YOU WIN!");
+        gameUI_Manager.ShowGameFinishedUI();
     }
 
     private void Update()
@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToTheMainMenu()
     {
-
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Restart()
