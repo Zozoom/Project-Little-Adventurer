@@ -30,4 +30,9 @@ public class Gate : MonoBehaviour
 
         gateCollider.enabled = false;
     }
+
+    public void Open()
+    {
+        StartCoroutine(OpenGateAnimation());
+    }
 }
