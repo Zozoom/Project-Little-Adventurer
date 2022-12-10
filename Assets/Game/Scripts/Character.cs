@@ -105,6 +105,8 @@ public class Character : MonoBehaviour
 
         _animator.SetBool("AirBorne", !_cc.isGrounded);
 
+        // RotateToCursor(); // here we are check that user is rotated to the cursor position
+
         _playerNameText3D.transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
     }
 
@@ -154,7 +156,7 @@ public class Character : MonoBehaviour
                         {
                             _playerInput.mouseButtonDown = false;
                             SwitchStateTo(CharacterState.Attacking);
-                            CalcPlayerMovement();
+                            // CalcPlayerMovement();
                         }
                     }
                 }
@@ -244,12 +246,21 @@ public class Character : MonoBehaviour
                 }
                 _animator.SetTrigger("Attack");
                 if (IsPlayer)
+                {
                     attackStartTime = Time.time;
+                    RotateToCursor();
+                }
                 break;
             case CharacterState.Dead:
                 _cc.enabled = false;
                 _animator.SetTrigger("Dead");
                 StartCoroutine(MaterialDissolve());
+                if (!IsPlayer)
+                {
+                    SkinnedMeshRenderer mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+                    mesh.gameObject.layer = 0;
+                }
+
                 break;
             case CharacterState.BeingHit:
                 _animator.SetTrigger("BeingHit");
@@ -428,5 +439,30 @@ public class Character : MonoBehaviour
 
         _materialPropertyBlock.SetFloat("_enableDissolve", 0f);
         _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitResult;
+
+        if (Physics.Raycast(ray, out hitResult, 1000, 1 << LayerMask.NameToLayer("CursorTest")))
+        {
+            Vector3 cursorPos = hitResult.point;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(cursorPos, 1);
+        }
+    }
+
+    private void RotateToCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitResult;
+
+        if (Physics.Raycast(ray, out hitResult, 1000, 1 << LayerMask.NameToLayer("CursorTest")))
+        {
+            Vector3 cursorPos = hitResult.point;
+            transform.rotation = Quaternion.LookRotation(cursorPos - transform.position, Vector3.up);
+        }
     }
 }
